@@ -1,3 +1,10 @@
 Notes
-* Get saved data to include the added info about each trial
-* record from left/right key presses
+X Get saved data to include the added info about each trial
+X Record from left/right key presses
+* Read configs from a setup file
+* Read trial infor from a CSV file
+https://csvjson.com/
+https://groups.google.com/g/jspsych/c/Qjubm9T1o4U/m/iZF23jqyDwAJ
+* Make staircase decisions
+* * return "<p>Correct!"+JSON.stringify(NumberCorrect)+"</p>";
+* * This can be done with a  function within a trial

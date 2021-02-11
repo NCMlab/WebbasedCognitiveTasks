@@ -96,7 +96,7 @@
     }
   
     var test_procedure = {
-      timeline: [fixation, test, feedback],
+      timeline: [fixation, test],
       timeline_variables: test_stimuli,
       sample: {
         type: 'fixed-repetitions',
@@ -118,7 +118,7 @@
         */
         default_iti: 100,
 		on_finish: function() {
-        	//jsPsych.data.get().localSave('csv','mydata.csv');
+        	jsPsych.data.get().localSave('csv','mydata.csv');
         	jsPsych.data.displayData();
       	}
       });
