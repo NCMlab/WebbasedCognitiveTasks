@@ -11,7 +11,7 @@
     <script src="jspsych-6.2.0/jspsych.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
-    
+    <script src="assests/javascript/jatos.js"></script>
     <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
   </head>
   <body></body>
@@ -136,6 +136,7 @@
 	timeline.push(test_procedure, feedback);
 	timeline.push(thank_you);
     /* start the experiment */
+  jatos.onLoad(function() {
     jsPsych.init({
       	timeline: timeline,
         /* this adds a fixed amount of time between every trial on the screen
@@ -146,8 +147,11 @@
 		on_finish: function() {
         	//jsPsych.data.get().localSave('csv','mydata.csv');
         	jsPsych.data.displayData();
+          var resultJson = jsPaych.data.get().json();
+          jatos.submitResultData(resultJson, jatos,startNextComponent);
       	}
       });
+  });
     
   </script>
 </html>
