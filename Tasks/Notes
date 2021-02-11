@@ -8,3 +8,5 @@ https://groups.google.com/g/jspsych/c/Qjubm9T1o4U/m/iZF23jqyDwAJ
 * Make staircase decisions
 * * return "<p>Correct!"+JSON.stringify(NumberCorrect)+"</p>";
 * * This can be done with a  function within a trial
+
+* JATOS works, I need to get GitHub, jspsych and JATOS to work together nicely.
