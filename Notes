@@ -10,3 +10,7 @@ https://groups.google.com/g/jspsych/c/Qjubm9T1o4U/m/iZF23jqyDwAJ
 * * This can be done with a  function within a trial
 
 * JATOS works, I need to get GitHub, jspsych and JATOS to work together nicely.
+This cannot be done. Tasks need to be JATOSIFIED before they will work in JATOS. If all code is sitting in a GITHUB repo then each time changes are pulled any JATOSIFICATION will be overwritten with the original version again. Code will have to be copied from the GitHub repo to JATOS and then changed.
+
+
+https://www.willmaster.com/library/tutorials/position-exactly-relatively.php
