@@ -35,13 +35,14 @@
     
     function HW(LetterString, ColSize, RowSize, FontSize){
       // prepare letters to be displayed on the screen
-      
       L = '<table style="font-size:60px">'
       var Row1='<tr style="height:'+RowSize+'px"><td style="width:'+ColSize+'px">A</td><td style="width:'+ColSize+'px" >B</td><td style="width:'+ColSize+'px">C</td></tr>'
       var Row2='<tr style="height:'+RowSize+'px"><td style="width:'+ColSize+'px">D</td><td style="width:'+ColSize+'px" >B</td><td style="width:'+ColSize+'px">C</td></tr>'
       var Row3='<tr style="height:'+RowSize+'px"><td style="width:'+ColSize+'px">E</td><td style="width:'+ColSize+'px" >B</td><td style="width:'+ColSize+'px">C</td></tr>'
       return L+Row1+Row2+Row3+'</table>';
     }
+
+    
     /* define welcome message trial */
     var welcome = {
       type: "html-keyboard-response",
