@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="jsPsych Cognitive task">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Jason Steffener, NCMLab">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCM Lab: Stroop</title>
+    <script src="../jspsych-6.2.0/jspsych.js"></script>
+    <script src="../jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="../jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="Stroop_ColorWord.js"></script>
+    <link href="../jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
+    <style>
+      .stimulus { font-size: 60px; }
+    </style>
+  </head>
+  <body style="background-color:rgb(150,150,150);"></body>
+  <script>
+	/*<?php
+		$post_data = json_decode(file_get_contents('php://input'), true); 
+		// the directory "data" must be writable by the server
+		$name = "data/".$post_data['filename'].".csv"; 
+		$data = $post_data['filedata'];
+		// write the file to disk
+		file_put_contents($name, $data);
+		?>*/
+
+  	    /* create timeline */
+
+    var timeline = [];
+
+    /* define welcome message trial */
+    var welcome = {
+      type: "html-keyboard-response",
+      stimulus: "Welcome to the Stroop experiment. Press any key to begin. "
+    };
+    var Instructions = {
+      type: "html-keyboard-response",
+      stimulus :"<p>Instructions</p>Press the Escape key to end the experiment."
+    }
+
+    var KeyboardFigure = {
+      type: 'image-keyboad-reponse',
+      stimulus: 'StroopColorsKeyboard.png'
+    }
+
+    /* define thank you trial */
+    var thank_you = {
+    	type: "html-keyboard-response",
+    	stimulus: "Thank you for participanting. Press any key to end."
+    };
+
+    var Stimulus = {
+          type: 'html-keyboard-response',
+          stimulus: function(){ return '<p class="stimulus" style="color:rgb'+jsPsych.timelineVariable('Color', true)+';">' +jsPsych.timelineVariable('Word', true)+'</p>'; },
+          choices: ['v','b','n','m',27],
+          post_trial_gap: 0,
+          data: {
+            Congruency: jsPsych.timelineVariable('Congruency'),
+            Correct: jsPsych.timelineVariable('Correct')
+          },
+      on_finish: function(data){
+        data.correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.Correct);
+        /* If the N key is pressed the current timeline is ended and the thank you screen is shown */
+        if (data.key_press == 27) {
+          jsPsych.endCurrentTimeline();
+        }
+      },
+      }
+
+  	var fixation = {
+  	  type: 'html-keyboard-response',
+  	  stimulus: '<div style="font-size:60px;">+</div><p><p><img src="StroopColorsKeyboard.png" style="position:relative; bottom:-200px">',
+  	  choices: jsPsych.NO_KEYS,
+  	  trial_duration: 100,//function(){
+          /*return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];*/
+        //},
+      data: {test_part: 'fixation'}
+  	}
+/* ARROWS 37 = left, 38 = up, 39 = right, 40 = down */
+/* Escape = 27 */ 
+    var feedback = {
+      type: 'html-keyboard-response',
+      trial_duration: 400,
+      stimulus: function(){
+        var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
+        if(last_trial_correct){
+          return '<table border="0" width="600"><tr height="200"><td></td></tr><tr height="200"><td><div style="font-size:60px;">Correct!</div></td></tr><tr height="200"><td valign="bottom"><img src="StroopColorsKeyboard.png"></td></tr></table>';
+
+
+        } else {
+          return '<table border="0" width="600"><tr height="200"><td></td></tr><tr height="200"><td><div style="font-size:60px;">Incorrect</div></td></tr><tr height="200"><td valign="bottom"><img src="StroopColorsKeyboard.png"></td></tr></table>';
+        }
+      }
+    }
+
+    var practice_procedure = {
+      timeline: [fixation, Stimulus, feedback],
+      timeline_variables: StroopColorWordList,
+      sample: {
+        type: 'fixed-repetitions',
+        size: 1, 
+      }
+    }
+    var test_procedure = {
+      timeline: [fixation, Stimulus],
+      timeline_variables: StroopColorWordList,
+      sample: {
+        type: 'fixed-repetitions',
+        size: 5, 
+      }
+    }
+
+	timeline.push(welcome);
+  timeline.push(Instructions);
+  timeline.push(practice_procedure);
+  timeline.push(Instructions);
+	timeline.push(test_procedure);
+	timeline.push(thank_you);
+    /* start the experiment */
+    jsPsych.init({
+      	timeline: timeline,
+        /* this adds a fixed amount of time between every trial on the screen
+        this is between fixation and the start of a trial and between that trial and the next fixation
+        */
+
+      });
+    
+  </script>
+</html>

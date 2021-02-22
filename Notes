@@ -5,6 +5,8 @@ X Record from left/right key presses
 * Read trial infor from a CSV file
 https://csvjson.com/
 https://groups.google.com/g/jspsych/c/Qjubm9T1o4U/m/iZF23jqyDwAJ
+
+
 * Make staircase decisions
 * * return "<p>Correct!"+JSON.stringify(NumberCorrect)+"</p>";
 * * This can be done with a  function within a trial

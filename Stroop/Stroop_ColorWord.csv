@@ -1,0 +1,17 @@
+No,Word,TextColor,Congruency,CorrText,CorrWord,ShapeColor,CorrShape
+1,Red,Red,Con,v,v,"[1,-1,-1]",v
+2,Red,Yellow,Incon,b,v,"[1,1,-1]",b
+3,Red,Blue,Incon,m,v,"[-1,-1,1]",m
+4,Red,Green,Incon,n,v,"[-1,0.6,-1]",n
+5,Yellow,Red,Incon,v,b,"[1,-1,-1]",v
+6,Yellow,Yellow,Con,b,b,"[1,1,-1]",b
+7,Yellow,Blue,Incon,m,b,"[-1,-1,1]",m
+8,Yellow,Green,Incon,n,b,"[-1,0.6,-1]",n
+9,Blue,Red,Incon,v,m,"[1,-1,-1]",v
+10,Blue,Yellow,Incon,b,m,"[1,1,-1]",b
+11,Blue,Blue,Con,m,m,"[-1,-1,1]",m
+12,Blue,Green,Incon,n,m,"[-1,0.6,-1]",n
+13,Green,Red,Incon,v,n,"[1,-1,-1]",v
+14,Green,Yellow,Incon,b,n,"[1,1,-1]",b
+15,Green,Blue,Incon,m,n,"[-1,-1,1]",m
+16,Green,Green,Con,n,n,"[-1,0.6,-1]",n
