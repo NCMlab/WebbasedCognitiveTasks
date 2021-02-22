@@ -37,11 +37,14 @@
       type: "html-keyboard-response",
       stimulus: "Welcome to the Stroop experiment. Press any key to begin. "
     };
-    var Instructions = {
+    var PracticeInstructions = {
       type: "html-keyboard-response",
-      stimulus :"<p>Instructions</p>Press the Escape key to end the experiment."
+      stimulus :"<p>PRACTICE Instructions</p>Press the Escape key to end the experiment."
     }
-
+    var TestInstructions = {
+      type: "html-keyboard-response",
+      stimulus :"<p>TEST Instructions</p>Press the Escape key to end the experiment."
+    }
     var KeyboardFigure = {
       type: 'image-keyboad-reponse',
       stimulus: 'StroopColorsKeyboard.png'
@@ -64,6 +67,8 @@
           },
       on_finish: function(data){
         data.correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.Correct);
+        // This used later on to filter trials
+        data.type = 'trial';
         /* If the N key is pressed the current timeline is ended and the thank you screen is shown */
         if (data.key_press == 27) {
           jsPsych.endCurrentTimeline();
@@ -96,7 +101,7 @@
         }
       }
     }
-
+    // Define a practie procedure which provides feedback
     var practice_procedure = {
       timeline: [fixation, Stimulus, feedback],
       timeline_variables: StroopColorWordList,
@@ -105,6 +110,7 @@
         size: 1, 
       }
     }
+    // Define the test procedure which does NOT provide feedback
     var test_procedure = {
       timeline: [fixation, Stimulus],
       timeline_variables: StroopColorWordList,
@@ -113,13 +119,65 @@
         size: 5, 
       }
     }
+    // Prepare debriefing for after the practice trials
+    var debrief = {
+        type: "html-keyboard-response",
+          stimulus: function() {
+            var total_trials = jsPsych.data.get().filter({type: 'trial'}).count();
+            
+            var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
+            var congruent_rt = Math.round(jsPsych.data.get().filter({correct: true, Congruency: 'Con'}).select('rt').mean());
+            var incongruent_rt = Math.round(jsPsych.data.get().filter({correct: true, Congruency: 'Incon'}).select('rt').mean());
 
+            if (accuracy < 0.5){
+              timeline.push(PracticeInstructions);
+            } else {
+              timeline.push(TestInstructions);
+            }
+            return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the "+total_trials+" trials.</p> " +
+            "<p>Your average response time for congruent trials was <strong>" + congruent_rt + "ms</strong>.</p>"+
+            "<p>Your average response time for incongruent trials was <strong>" + incongruent_rt + "ms</strong>.</p>"+
+            "<p>Press any key to complete the experiment. Thank you!</p>";
+            
+          }
+        };
+  // This a conditional block which checks to see if the performance during practice was good enough
+  // if performance on the practice is above 50% accurate then the test procedure is done.
+  // otherwise practice is done again
+  var if_node = {
+    timeline: [PracticeInstructions, practice_procedure],
+    conditional_function: function(){
+      // check performance on the practice
+        var total_trials = jsPsych.data.get().filter({type: 'trial'}).count();
+        var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
+        if (accuracy < 50) {
+          return true;
+        } else {
+          return false;
+        }
+    }
+  }
+  // I WILL NEED A SCOND DECISION BLOCK WHERE WE DECIDE WHETHER TO JUST STOP
+
+  // Say hello
 	timeline.push(welcome);
-  timeline.push(Instructions);
+  // Provide instructions for practice 
+  timeline.push(PracticeInstructions);
+  // run the practice trials
   timeline.push(practice_procedure);
-  timeline.push(Instructions);
-	timeline.push(test_procedure);
-	timeline.push(thank_you);
+  // provide feedback as to their performance
+  timeline.push(debrief);
+  // decide if the person did well enough
+  timeline.push(if_node);
+  // decide if the person did well enough
+  timeline.push(if_node);
+  // run the test
+  timeline.push(TestInstructions);
+  timeline.push(test_procedure);
+  // After practice check the accuracy and decide if another practice session should be performed
+//  timeline.push(TestInstructions);
+//	timeline.push(test_procedure);
+//	timeline.push(thank_you);
     /* start the experiment */
     jsPsych.init({
       	timeline: timeline,
