@@ -1,3 +1,6 @@
+function PutIntoTable(top='top', middle='mid', width=600, height=300) {
+      return '<table border="0" width="'+width+'"><tr height="'+height+'"><td>'+top+'</td></tr><tr height="'+height+'"><td><div style="font-size:60px;">'+middle+'</div></td></tr><tr height="'+height+'"><td valign="bottom"><img src="StroopColorsKeyboard.png"></td></tr></table>';
+    }
 var StroopColorWordList = [
  {
    "Word": "Red",
