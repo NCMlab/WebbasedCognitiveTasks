@@ -37,23 +37,24 @@
       type: "html-keyboard-response",
       stimulus: "Welcome to the Stroop experiment. Press any key to begin. "
     };
+
     var PracticeInstructions = {
       type: "html-keyboard-response",
       stimulus : function(){
-        var temp = PutIntoTable('Instructions','Press the Escape key to end the experiment.')
+        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">This is a paragraph.</p>')
         return temp;
       }
     }
 
     var TestInstructions = {
       type: "html-keyboard-response",
-      stimulus :"<p>TEST Instructions</p>Press the Escape key to end the experiment."
-    }
-    var KeyboardFigure = {
-      type: 'image-keyboad-reponse',
-      stimulus: 'StroopColorsKeyboard.png'
+      stimulus : function(){
+        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">This is a paragraph.</p>')
+        return temp;
+      }
     }
 
+    
     /* define thank you trial */
     var thank_you = {
     	type: "html-keyboard-response",
