@@ -13,6 +13,7 @@
     <script src="../jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
     <script src="Stroop_ColorWord.js"></script>
     <link href="../jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
+    <script src="/assets/javascripts/jatos.js"></script>
     <style>
       .stimulus { font-size: 60px; }
     </style>
@@ -35,13 +36,13 @@
     /* define welcome message trial */
     var welcome = {
       type: "html-keyboard-response",
-      stimulus: "Welcome to the Stroop experiment. Press any key to begin. "
+      stimulus: "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
     };
 
     var PracticeInstructions = {
       type: "html-keyboard-response",
       stimulus : function(){
-        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">This is a paragraph.</p>')
+        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will first start with some practice trials where you will receive feedback. Try to respond as quickly and accurately as possible.</p>')
         return temp;
       }
     }
@@ -49,7 +50,7 @@
     var TestInstructions = {
       type: "html-keyboard-response",
       stimulus : function(){
-        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">This is a paragraph.</p>')
+        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">You will see a colored word. Press the key corresponding to teh color you see. The keys are shown below. You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>')
         return temp;
       }
     }
@@ -85,7 +86,8 @@
         data.type = 'trial';
         /* If the N key is pressed the current timeline is ended and the thank you screen is shown */
         if (data.key_press == 27) {
-          jsPsych.endCurrentTimeline();
+          //jsPsych.endCurrentTimeline();
+          jsPsych.end();
         }
       },
       }
@@ -126,7 +128,7 @@
       timeline_variables: StroopColorWordList,
       sample: {
         type: 'fixed-repetitions',
-        size: 3, 
+        size: 1, 
       }
     }
     // Define the test procedure which does NOT provide feedback
@@ -135,7 +137,7 @@
       timeline_variables: StroopColorWordList,
       sample: {
         type: 'fixed-repetitions',
-        size: 5, 
+        size: 1, 
       }
     }
     // Prepare debriefing for after the practice trials
@@ -193,18 +195,20 @@
   // run the test
   timeline.push(TestInstructions);
   timeline.push(test_procedure);
+  timeline.push(thank_you);
   // After practice check the accuracy and decide if another practice session should be performed
 //  timeline.push(TestInstructions);
 //	timeline.push(test_procedure);
 //	timeline.push(thank_you);
     /* start the experiment */
-    jsPsych.init({
+  //jatos.onLoad(function() {
+    //jsPsych.init({
       	timeline: timeline,
         /* this adds a fixed amount of time between every trial on the screen
         this is between fixation and the start of a trial and between that trial and the next fixation
         */
 
       });
-    
+    //});
   </script>
 </html>
