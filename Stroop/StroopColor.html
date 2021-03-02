@@ -8,11 +8,12 @@
     <meta name="author" content="Jason Steffener, NCMLab">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCM Lab: Stroop</title>
-    <script src="../jspsych-6.2.0/jspsych.js"></script>
-    <script src="../jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
-    <script src="../jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="jspsych-6.2.0/jspsych.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
     <script src="Stroop_ColorWord.js"></script>
-    <link href="../jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
+    <script src="StroopSetup.js"></script>
+    <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
     <script src="/assets/javascripts/jatos.js"></script>
     <style>
       .stimulus { font-size: 60px; }
@@ -36,7 +37,7 @@
     /* define welcome message trial */
     var welcome = {
       type: "html-keyboard-response",
-      stimulus: "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
+      stimulus: ColorWelcome
     };
 
     var PracticeInstructions = {
