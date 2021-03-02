@@ -17,7 +17,18 @@ Script copyright: 03-01-2021 Neurocognitive Mapping Laboratory
 
 # Modifiable Parameters
 
+~~~gfm
+```flow
 st=>start: Start
+op=>operation: Your Operation
+cond=>condition: Yes or No?
 e=>end
-st=>op1->cond
+
+st->op->cond
+cond(yes)->e
+cond(no)->op
+```
+~~~
+
+
 
