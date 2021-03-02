@@ -17,3 +17,7 @@ Script copyright: 03-01-2021 Neurocognitive Mapping Laboratory
 
 # Modifiable Parameters
 
+st=>start: Start
+e=>end
+st=>op1->cond
+
