@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-
     <meta charset="UTF-8">
     <meta name="description" content="jsPsych Cognitive task">
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="author" content="Jason Steffener, NCMLab">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NCM Lab: Stroop</title>
-    <script src="../jspsych-6.2.0/jspsych.js"></script>
-    <script src="../jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
-    <script src="../jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
-    <script src="Stroop_ColorWord.js"></script>
-    <link href="../jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
+    <script src="jspsych-6.2.0/jspsych.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="StroopSetup.js"></script>
+    <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
     <script src="/assets/javascripts/jatos.js"></script>
     <style>
-      .stimulus { font-size: 60px; }
+      .stimulus { font-size: StimulusFontSize; }
     </style>
   </head>
   <body style="background-color:rgb(150,150,150);"></body>
@@ -36,13 +35,13 @@
     /* define welcome message trial */
     var welcome = {
       type: "html-keyboard-response",
-      stimulus: "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
+      stimulus: WordWelcome
     };
 
     var PracticeInstructions = {
       type: "html-keyboard-response",
       stimulus : function(){
-        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will first start with some practice trials where you will receive feedback. Try to respond as quickly and accurately as possible.</p>')
+        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>',WordPracticeInstructions)
         return temp;
       }
     }
@@ -50,7 +49,7 @@
     var TestInstructions = {
       type: "html-keyboard-response",
       stimulus : function(){
-        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">You will see a colored word. Press the key corresponding to teh color you see. The keys are shown below. You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>')
+        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>',WordTestInstructions)
         return temp;
       }
     }
@@ -74,7 +73,7 @@
           },
 
 
-          choices: ['v','b','n','m',27],
+          choices: ResponseChoices,
           post_trial_gap: 0,
           data: {
             Correct: jsPsych.timelineVariable('Correct')
@@ -100,7 +99,7 @@
       },
         //return '<div style="font-size:60px;">+</div><p><p><img src="StroopColorsKeyboard.png" style="position:relative; bottom:-200px">'},
   	  choices: jsPsych.NO_KEYS,
-  	  trial_duration: 500,//function(){
+  	  trial_duration: FixationLength,//function(){
           /*return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];*/
         //},
       data: {test_part: 'fixation'}
@@ -109,7 +108,7 @@
 /* Escape = 27 */ 
     var feedback = {
       type: 'html-keyboard-response',
-      trial_duration: 400,
+      trial_duration: FeedbackLength,
       stimulus: function(){
         var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
         if(last_trial_correct){
@@ -190,17 +189,10 @@
   timeline.push(TestInstructions);
   timeline.push(test_procedure);
   timeline.push(thank_you);
-  // After practice check the accuracy and decide if another practice session should be performed
-//  timeline.push(TestInstructions);
-//	timeline.push(test_procedure);
-//	timeline.push(thank_you);
     /* start the experiment */
   //jatos.onLoad(function() {
     jsPsych.init({
       	timeline: timeline,
-        /* this adds a fixed amount of time between every trial on the screen
-        this is between fixation and the start of a trial and between that trial and the next fixation
-        */
 
       });
   //});

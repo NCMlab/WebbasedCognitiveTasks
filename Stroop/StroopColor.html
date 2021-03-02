@@ -11,26 +11,16 @@
     <script src="jspsych-6.2.0/jspsych.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
-    <script src="Stroop_ColorWord.js"></script>
     <script src="StroopSetup.js"></script>
     <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
     <script src="/assets/javascripts/jatos.js"></script>
     <style>
-      .stimulus { font-size: 60px; }
+      .stimulus { font-size: StimulusFontSize; }
     </style>
   </head>
   <body style="background-color:rgb(150,150,150);"></body>
   <script>
-	/*<?php
-		$post_data = json_decode(file_get_contents('php://input'), true); 
-		// the directory "data" must be writable by the server
-		$name = "data/".$post_data['filename'].".csv"; 
-		$data = $post_data['filedata'];
-		// write the file to disk
-		file_put_contents($name, $data);
-		?>*/
-
-  	    /* create timeline */
+  	/* create timeline */
 
     var timeline = [];
 
@@ -43,7 +33,7 @@
     var PracticeInstructions = {
       type: "html-keyboard-response",
       stimulus : function(){
-        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">You will see a colored rectangle. Press the key corresponding to the color you see. The keys are shown below. You will first start with some practice trials where you will receive feedback. Try to respond as quickly and accurately as possible.</p>')
+        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>',ColorPracticeInstructions)
         return temp;
       }
     }
@@ -51,18 +41,16 @@
     var TestInstructions = {
       type: "html-keyboard-response",
       stimulus : function(){
-        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>','<p style="font-size:30px">You will see a colored rectangle. Press the key corresponding to teh color you see. The keys are shown below. You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>')
+        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>',ColorTestInstructions)
         return temp;
       }
     }
 
-    
     /* define thank you trial */
     var thank_you = {
     	type: "html-keyboard-response",
-    	stimulus: "Thank you for participanting. Press any key to end."
+    	stimulus: ColorThankYouText
     };
-
 
     var Stimulus = {
           type: 'html-keyboard-response',
@@ -75,7 +63,7 @@
           },
 
 
-          choices: ['v','b','n','m',27],
+          choices: ResponseChoices,
           post_trial_gap: 0,
           data: {
             Correct: jsPsych.timelineVariable('Correct')
@@ -101,7 +89,7 @@
       },
         //return '<div style="font-size:60px;">+</div><p><p><img src="StroopColorsKeyboard.png" style="position:relative; bottom:-200px">'},
   	  choices: jsPsych.NO_KEYS,
-  	  trial_duration: 500,//function(){
+  	  trial_duration: FixationLength,//function(){
           /*return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];*/
         //},
       data: {test_part: 'fixation'}
@@ -110,7 +98,7 @@
 /* Escape = 27 */ 
     var feedback = {
       type: 'html-keyboard-response',
-      trial_duration: 400,
+      trial_duration: FeedbackLength,
       stimulus: function(){
         var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
         if(last_trial_correct){
@@ -128,7 +116,7 @@
       timeline_variables: StroopWordList,
       sample: {
         type: 'fixed-repetitions',
-        size: 1, 
+        size: ColorPracticeRepeats, 
       }
     }
     // Define the test procedure which does NOT provide feedback
@@ -137,7 +125,7 @@
       timeline_variables: StroopWordList,
       sample: {
         type: 'fixed-repetitions',
-        size: 1, 
+        size: ColorTestRepeats, 
       }
     }
     // Prepare debriefing for after the practice trials
@@ -191,18 +179,11 @@
   timeline.push(TestInstructions);
   timeline.push(test_procedure);
   timeline.push(thank_you);
-  // After practice check the accuracy and decide if another practice session should be performed
-//  timeline.push(TestInstructions);
-//	timeline.push(test_procedure);
-//	timeline.push(thank_you);
+
     /* start the experiment */
   //jatos.onLoad(function() {  
     jsPsych.init({
       	timeline: timeline,
-        /* this adds a fixed amount of time between every trial on the screen
-        this is between fixation and the start of a trial and between that trial and the next fixation
-        */
-
       });
     //});
   </script>
