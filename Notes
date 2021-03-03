@@ -11,8 +11,16 @@ https://groups.google.com/g/jspsych/c/Qjubm9T1o4U/m/iZF23jqyDwAJ
 * * return "<p>Correct!"+JSON.stringify(NumberCorrect)+"</p>";
 * * This can be done with a  function within a trial
 
+
 * JATOS works, I need to get GitHub, jspsych and JATOS to work together nicely.
 This cannot be done. Tasks need to be JATOSIFIED before they will work in JATOS. If all code is sitting in a GITHUB repo then each time changes are pulled any JATOSIFICATION will be overwritten with the original version again. Code will have to be copied from the GitHub repo to JATOS and then changed.
 
 
 https://www.willmaster.com/library/tutorials/position-exactly-relatively.php
+
+* To do
+* * Confirm how data is saved and stored. How do we get browser information?
+* * Add full screen mode
+* * Add running timer for tasks like the spatial relations or matrix reasoning tasks
+* * How to make an object on the screen clickable
+* * * This is important for spatial relations, WCST, or making touch screen versions of the tasks
