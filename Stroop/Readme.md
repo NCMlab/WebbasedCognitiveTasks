@@ -1,5 +1,5 @@
 # Stroop color, word task with keyboard input
-Script copyright: 03-01-2021 Neurocognitive Mapping Laboratory
+Script copyright: 03-01-2021 Jason Steffener, Neurocognitive Mapping Laboratory
 
 # Background
 This is an implementation of the classic Stroop task with keyboard input. 

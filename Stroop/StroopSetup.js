@@ -53,6 +53,7 @@ function PutIntoTable(top='top', middle='mid', width=600, height=300) {
     }
 /* ========================================================= 
 	This is the stimuli list for both stroop color and word
+   The green is very bright. TO make it less bright change it to something like (0,200,0)
 */
 
 var StroopWordList = [
