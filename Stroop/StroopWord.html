@@ -10,6 +10,8 @@
     <script src="jspsych-6.2.0/jspsych.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-fullscreen.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-instructions.js"></script>    
     <script src="StroopSetup.js"></script>
     <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
     <script src="/assets/javascripts/jatos.js"></script>
@@ -32,26 +34,32 @@
 
     var timeline = [];
 
-    /* define welcome message trial */
-    var welcome = {
-      type: "html-keyboard-response",
-      stimulus: WordWelcome
-    };
+    // Make experiment run in full screen mode
+    // Note, that the fullscreen plugin needs to imported above
+    timeline.push({
+      type: 'fullscreen',
+      fullscreen_mode: true
+    });
 
-    var PracticeInstructions = {
-      type: "html-keyboard-response",
-      stimulus : function(){
-        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>',WordPracticeInstructions)
-        return temp;
-      }
+   /* Create the initial welcome and instructions for practice.
+   This uses the built in instructions module. Make sure it gets imported above */ 
+    var WordInstr = {
+       type: 'instructions',
+       pages: WordInstrText,
+       show_clickable_nav: true
     }
-
-    var TestInstructions = {
-      type: "html-keyboard-response",
-      stimulus : function(){
-        var temp = PutIntoTable('<p style="font-size:30px">Instructions</p>',WordTestInstructions)
-        return temp;
-      }
+    /* After practice is completed the performance is being checked. If accuracy is below 50% then the practice is repeated.
+    These are the instructions stating that practice will be repeated. */
+    var WordPoorPerfInstr = {
+       type: 'instructions',
+       pages: WordInstrPoorPerformanceText,
+       show_clickable_nav: true
+    }
+    /* Instructions shown to participants before test trials begin. */
+    var WordTestInstr = {
+       type: 'instructions',
+       pages: WordTestInstrText,
+       show_clickable_nav: true
     }
 
     
@@ -69,19 +77,15 @@
             var Stim = jsPsych.timelineVariable('Word', true)
             var temp = PutIntoTable('',Stim)
             return temp;
-            //return '<p class="stimulus" style="color:rgb'+jsPsych.timelineVariable('Color', true)+';">' +jsPsych.timelineVariable('Word', true)+'</p>'; 
           },
-
-
           choices: ResponseChoices,
           post_trial_gap: 0,
           data: {
-            Correct: jsPsych.timelineVariable('Correct')
+            Correct: jsPsych.timelineVariable('Correct'),
+            test_part: 'trial'
           },
         on_finish: function(data){
           data.correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.Correct);
-          // This used later on to filter trials
-          data.type = 'trial';
           /* If the N key is pressed the current timeline is ended and the thank you screen is shown */
           if (data.key_press == 27) {
             //jsPsych.endCurrentTimeline();
@@ -97,7 +101,6 @@
         var temp = PutIntoTable('','+')
         return temp;
       },
-        //return '<div style="font-size:60px;">+</div><p><p><img src="StroopColorsKeyboard.png" style="position:relative; bottom:-200px">'},
   	  choices: jsPsych.NO_KEYS,
   	  trial_duration: FixationLength,//function(){
           /*return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];*/
@@ -142,14 +145,8 @@
     var debrief = {
         type: "html-keyboard-response",
           stimulus: function() {
-            var total_trials = jsPsych.data.get().filter({type: 'trial'}).count();
-            
+            var total_trials = jsPsych.data.get().filter({test_part: 'trial'}).count();
             var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
-            if (accuracy < 0.5){
-              timeline.push(PracticeInstructions);
-            } else {
-              timeline.push(TestInstructions);
-            }
             return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the "+total_trials+" trials.</p> " +
             "<p>Press any key to complete the experiment. Thank you!</p>";
             
@@ -159,10 +156,10 @@
   // if performance on the practice is above 50% accurate then the test procedure is done.
   // otherwise practice is done again
   var if_node = {
-    timeline: [PracticeInstructions, practice_procedure],
+    timeline: [WordPoorPerfInstr, practice_procedure, debrief],
     conditional_function: function(){
       // check performance on the practice
-        var total_trials = jsPsych.data.get().filter({type: 'trial'}).count();
+        var total_trials = jsPsych.data.get().filter({test_part: 'trial'}).count();
         var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
         if (accuracy < 50) {
           return true;
@@ -173,10 +170,7 @@
   }
 
 
-  // Say hello
-	timeline.push(welcome);
-  // Provide instructions for practice 
-  timeline.push(PracticeInstructions);
+  timeline.push(WordInstr);
   // run the practice trials
   timeline.push(practice_procedure);
   // provide feedback as to their performance
@@ -185,15 +179,22 @@
   timeline.push(if_node);
   // decide if the person did well enough
   timeline.push(if_node);
+  // Present test instructions
+  timeline.push(WordTestInstr);
   // run the test
-  timeline.push(TestInstructions);
   timeline.push(test_procedure);
   timeline.push(thank_you);
     /* start the experiment */
   //jatos.onLoad(function() {
     jsPsych.init({
-      	timeline: timeline,
-
+        experiment_width: 600,
+        timeline: timeline,
+        on_interaction_data_update: function(data) {
+          console.log(JSON.stringify(data))
+        },
+        on_finish: function() {
+          jsPsych.data.get().localSave('csv','StroopWordMydata.csv');
+        }
       });
   //});
     

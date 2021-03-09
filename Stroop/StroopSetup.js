@@ -9,6 +9,19 @@ var ColorInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">Ther
 
 var ColorTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'];
 
+var WordInstrText = [
+      '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Word experiment.</br> Click next to begin.',
+      '<p style="font-size:'+TextFontSize+'">In this task, words will appear in the center of the screen, like   this:</p><p style="font-size:'+TextFontSize+'">BLUE</p><p style="font-size:'+TextFontSize+'">You need to indicate what word is written. </br>Press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="StroopColorsKeyboard.png"></img>',
+   '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
+   
+
+var WordInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
+
+
+var WordTestInstrText = ['<p style="font-size:'+TextFontSize+'">Now you will do the task.</br>It will be exactly like the practice except you will not get feedback. </p>'];
+    
+
+
 
 var WordWelcome = "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
 
