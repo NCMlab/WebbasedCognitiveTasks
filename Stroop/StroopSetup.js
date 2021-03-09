@@ -1,16 +1,23 @@
-var ColorWelcome = "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
+var TextFontSize = "30px";
+
+var ColorInstrText = [
+      '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Color experiment.</br> Click next to begin.',
+      '<p style="font-size:'+TextFontSize+'">You will be identifying the color of rectangles shown on the screen. When a rectangle is shown on the screen you are to press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="StroopColorsKeyboard.png"></img>',
+      '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
+
+var ColorInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
+
+var ColorTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'];
+
 
 var WordWelcome = "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
 
 var ColorWordWelcome = "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
 
-var ColorPracticeInstructions = '<p style="font-size:30px">You will see a colored rectangle. Press the key corresponding to the color you see. The keys are shown below. You will first start with some practice trials where you will receive feedback. Try to respond as quickly and accurately as possible.</p>'
-
 var WordPracticeInstructions = '<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will first start with some practice trials where you will receive feedback. Try to respond as quickly and accurately as possible.</p>'
 
 var ColorWordPracticeInstructions = '<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will first start with some practice trials where you will receive feedback. Try to respond as quickly and accurately as possible.</p>'
 
-var ColorTestInstructions = '<p style="font-size:30px">You will see a colored rectangle. Press the key corresponding to the color you see. The keys are shown below. You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'
 
 var WordTestInstructions = '<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'
 
