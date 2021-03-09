@@ -1,7 +1,8 @@
 var TextFontSize = "30px";
+var StimulusFontSize = '60px';
 
 var ColorInstrText = [
-      '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Color experiment.</br> Click next to begin.',
+      '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Color experiment.</p>',
       '<p style="font-size:'+TextFontSize+'">You will be identifying the color of rectangles shown on the screen. When a rectangle is shown on the screen you are to press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="StroopColorsKeyboard.png"></img>',
       '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
 
@@ -10,31 +11,22 @@ var ColorInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">Ther
 var ColorTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'];
 
 var WordInstrText = [
-      '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Word experiment.</br> Click next to begin.',
-      '<p style="font-size:'+TextFontSize+'">In this task, words will appear in the center of the screen, like   this:</p><p style="font-size:'+TextFontSize+'">BLUE</p><p style="font-size:'+TextFontSize+'">You need to indicate what word is written. </br>Press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="StroopColorsKeyboard.png"></img>',
+   '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Word experiment.</p>',
+   '<p style="font-size:'+TextFontSize+'">In this task, words will appear in the center of the screen, like   this:</p><p style="font-size:'+TextFontSize+'">BLUE</p><p style="font-size:'+TextFontSize+'">You need to indicate what word is written. </br>Press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="StroopColorsKeyboard.png"></img>',
    '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
    
-
 var WordInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
-
 
 var WordTestInstrText = ['<p style="font-size:'+TextFontSize+'">Now you will do the task.</br>It will be exactly like the practice except you will not get feedback. </p>'];
     
+var ColorWordInstrText = [
+      '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Color/Word experiment.</p>',
+      '<p style="font-size:'+TextFontSize+'">In this task, words will appear in the center of the screen. You need to indicate the COLOR that the word is written in (and ignore what the word says). Press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="StroopColorsKeyboard.png"></img>',
+      '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
 
+var ColorWordInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
 
-
-var WordWelcome = "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
-
-var ColorWordWelcome = "Welcome to the Stroop experiment. <p>In this experiment you will be identifying the color of the object that you see. You will see either a rectangular or a word.</p> Press any key to begin. "
-
-var WordPracticeInstructions = '<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will first start with some practice trials where you will receive feedback. Try to respond as quickly and accurately as possible.</p>'
-
-var ColorWordPracticeInstructions = '<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will first start with some practice trials where you will receive feedback. Try to respond as quickly and accurately as possible.</p>'
-
-
-var WordTestInstructions = '<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'
-
-var ColorWordTestInstructions = '<p style="font-size:30px">You will see a colored word. Press the key corresponding to the color you see. The keys are shown below. You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'
+var ColorWordTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'];
 
 var ColorThankYouText = 'Thank you for participanting. Press any key to continue to the next task.'
 
@@ -48,7 +40,7 @@ var ResponseChoices = ['v','b','n','m',27]
 
 var FeedbackLength = 400; // This is in milliseconds
 
-var FixationLength = 500; // This is in milliseconds
+//var FixationLength = 500; // This is in milliseconds
 
 var ColorPracticeRepeats = 1
 var WordPracticeRepeats = 1
@@ -61,7 +53,7 @@ var WordTestRepeats = 1
 // Since there are 16 possible trials, the number of trials will be 4 times the number of repeats
 var ColorWordTestRepeats = 1
 
-var StimulusFontSize = '60px'
+
 
 /* ========================================================= 
 	This is a function for positioning the instruction figure and stimuli on the screen

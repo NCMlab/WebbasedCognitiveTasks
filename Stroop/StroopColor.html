@@ -94,9 +94,9 @@
         return temp;
       },
   	  choices: jsPsych.NO_KEYS,
-  	  trial_duration: FixationLength,//function(){
-          /*return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];*/
-        //},
+  	  trial_duration: function(){
+          /eturn jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];*/
+        },
       data: {test_part: 'fixation'}
   	}
 /* ARROWS 37 = left, 38 = up, 39 = right, 40 = down */
@@ -137,10 +137,12 @@
   var debrief = {
         type: "html-keyboard-response",
           stimulus: function() {
-            var total_trials = jsPsych.data.get().filter({test_part: 'trial'}).count();
-            var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
+            var DataFromThisPracticeRun = jsPsych.data.get().filter({test_part: 'trial'}).last(4*ColorPracticeRepeats)
+            var total_trials = DataFromThisPracticeRun.count();
+            var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
+            var accuracy = Math.round(NumberCorrect / total_trials * 100);
             return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the "+total_trials+" trials.</p> " +
-            "<p>Press any key to complete the experiment. Thank you!</p>";
+            "<p>Press any key to continue the experiment. </p>";
             
           }
         };
@@ -152,8 +154,10 @@
     timeline: [ColorPoorPerfInstr, practice_procedure, debrief],
     conditional_function: function(){
       // check performance on the practice
-        var total_trials = jsPsych.data.get().filter({test_part: 'trial'}).count();
-        var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
+          var DataFromThisPracticeRun = jsPsych.data.get().filter({test_part: 'trial'}).last(4*ColorPracticeRepeats)
+            var total_trials = DataFromThisPracticeRun.count();
+            var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
+            var accuracy = Math.round(NumberCorrect / total_trials * 100);
         if (accuracy < 50) {
           return true;
         } else {
